@@ -15,8 +15,7 @@ def __files(directory, show_hidden=False):
     if not show_hidden:
         files = filter(lambda f: not f.startswith('.'), files)
 
-    for f in files:
-        yield '-'.rjust(3) + ' ' + f, os.path.join(directory, f)
+    return (('-'.rjust(3) + ' ' + f, os.path.join(directory, f)) for f in files)
 
 
 def print_files(directory='.', show_hidden=False, recurse=False, padding=0):
@@ -44,10 +43,9 @@ def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
             if raw_input('').lower() == 'q':
                 print 'stopped...'
                 break
-
         else:
             print x
 
 
 if __name__ == '__main__':
-    tree('..', recurse=True)
+    tree('..', recurse=True, one_by_one=True)
