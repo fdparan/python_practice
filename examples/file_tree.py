@@ -10,7 +10,7 @@ import os
 
 def __files(directory, show_hidden=False):
 
-    files = [x for x in os.listdir(directory)]
+    files = [x for x in os.listdir(directory)] if os.path.isdir(directory) else [directory]
 
     if not show_hidden:
         files = filter(lambda f: not f.startswith('.'), files)
@@ -48,4 +48,4 @@ def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
 
 
 if __name__ == '__main__':
-    tree('..', recurse=True, one_by_one=True)
+    tree('/Users/francisparanDropbox/programming/c programming/', recurse=True, one_by_one=True)
