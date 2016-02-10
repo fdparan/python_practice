@@ -48,4 +48,4 @@ def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
 
 
 if __name__ == '__main__':
-    tree('/Users/francisparanDropbox/programming/c programming/', recurse=True, one_by_one=True)
+    tree('.', recurse=True)
