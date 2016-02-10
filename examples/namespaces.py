@@ -9,33 +9,25 @@ from sys import modules
 import namespaces2
 
 
-class foo:
-    x = 5
+def example(example_name):
+    print('{0}\nExample {1}\n{0}'.format('=' * 10, example_name))
 
-print '''
-===============================================================================
- Example 1
-===============================================================================
-'''
-#----------- global
 
+example('1')
+# ----------- global
 a_var = 'global value'
 
+
 def a_func():
-    #----------- local
+    # ----------- local
     a_var = 'local value'
-    print a_var, '[ a_var inside a_func() ]'
+    print '[ a_var inside a_func() ]', a_var
 
 a_func()
+print '[ a_var outside a_func() ]', a_var
 
-print a_var, '[ a_var outside a_func() ]'
 
-print '''
-===============================================================================
- Example 2
-===============================================================================
-'''
-
+example('2')
 a_var = 'global value'
 
 
@@ -45,18 +37,14 @@ def a_func2():
     global a_var
     a_var += '+local value'
 
-    print a_var, '[ a_var inside a_func2() ]'
+    print '[ a_var inside a_func2() ]', a_var
 
-print a_var, '[ a_var outside a_func2() ]'
+print '[ a_var outside a_func2() ]', a_var
 a_func2()
-print a_var, '[ a_var outside a_func2() ]'
+print '[ a_var outside a_func2() ]', a_var
 
-print '''
-===============================================================================
- Example 3
-===============================================================================
-'''
 
+example('3')
 a_var = 'global value'
 
 
@@ -71,12 +59,8 @@ print a_var, '[ a_var outside a_func3() ]'
 # a_func3() # will raise UnboundLocalError
 print a_var, '[ a_var outside a_func3() ]'
 
-print '''
-===============================================================================
- Example 4
-===============================================================================
-'''
 
+example('4')
 #----------- global
 a_var = 'global value'
 
@@ -92,18 +76,18 @@ def outer():
     # inner() will print a_var defined 
     # within the local namespace.
     inner()
-    
+
+    # prints a_var defined within this enclosed namespace.
+    print a_var
+
 outer()
 
-print '''
-===============================================================================
- Example 5
-===============================================================================
-'''
+example('5')
 
 a_var = 'global variable'
 
 print globals()
+print 'a_var in globals()?', 'a_var' in globals()
 
 # call to the built-in len()
 print 'built-in len():', len(a_var)
@@ -128,12 +112,8 @@ def a_func4(in_var):
 
 a_func4('Hello, World!')
 
-print '''
-===============================================================================
- Example 6
-===============================================================================
-'''
 
+example('6')
 a = 'global'
 
 # globals(): ['a']
