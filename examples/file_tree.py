@@ -5,7 +5,13 @@ but with an extra option for printing file contents
 one by one.
 """
 
+from __future__ import print_function
 import os
+import sys
+
+if sys.version_info.major == 3:
+    from builtins import input
+    raw_input = input
 
 
 def __files(directory, show_hidden=False):
@@ -33,19 +39,19 @@ def print_files(directory='.', show_hidden=False, recurse=False, padding=0):
 
 def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
 
-    print directory
+    print(directory)
 
     for x in print_files(directory, show_hidden, recurse):
 
         if one_by_one:
-            print x,
+            print(x, end=' ')
 
             if raw_input('').lower() == 'q':
-                print 'stopped...'
+                print('stopped...')
                 break
         else:
-            print x
+            print(x)
 
 
 if __name__ == '__main__':
-    tree('.', recurse=True)
+    tree('..', show_hidden=True)
