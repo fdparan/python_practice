@@ -17,37 +17,35 @@ if sys.version_info.major == 3:
 def __files(directory, show_hidden=False):
 
     if not os.path.isdir(directory):
-        print('Directory not found: %s' % directory)
-        return ()
+        raise Exception('Directory not found: %s' % directory)
 
-    files = [x for x in os.listdir(directory)]
+    files = os.listdir(directory)
 
-    if not show_hidden:
-        files = filter(lambda f: not f.startswith('.'), files)
-
-    return (('-'.rjust(3) + ' ' + f, os.path.join(directory, f)) for f in files)
+    return filter(lambda f: not f.startswith('.'), files) if not show_hidden else files
 
 
 def print_files(directory='.', show_hidden=False, recurse=False, padding=0):
 
     pad = ''.rjust(padding)
 
-    for f, p in __files(directory, show_hidden):
-        
-        yield pad + f
+    for f in __files(directory, show_hidden):
+        path = os.path.join(directory, f)
+        file_output = "{} {}".format('-'.rjust(3), f)
 
-        if os.path.isdir(p) and recurse and os.access(p, os.R_OK):
-            for y in print_files(p, show_hidden, recurse, padding+5):
+        yield pad + file_output
+
+        if recurse and (os.path.isdir(path) and os.access(path, os.R_OK)):
+            for y in print_files(path, show_hidden, recurse, padding+5):
                 yield y
 
 
-def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
+def tree(directory, show_hidden=False, recurse=False, line_by_line=False):
 
     print(directory)
 
     for x in print_files(directory, show_hidden, recurse):
 
-        if one_by_one:
+        if line_by_line:
             print(x, end=' ')
 
             if raw_input('').lower() == 'q':
@@ -58,4 +56,4 @@ def tree(directory, show_hidden=False, recurse=False, one_by_one=False):
 
 
 if __name__ == '__main__':
-    tree('..', show_hidden=True)
+    tree('..', recurse=True)
