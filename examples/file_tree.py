@@ -16,7 +16,11 @@ if sys.version_info.major == 3:
 
 def __files(directory, show_hidden=False):
 
-    files = [x for x in os.listdir(directory)] if os.path.isdir(directory) else [directory]
+    if not os.path.isdir(directory):
+        print('Directory not found: %s' % directory)
+        return ()
+
+    files = [x for x in os.listdir(directory)]
 
     if not show_hidden:
         files = filter(lambda f: not f.startswith('.'), files)
