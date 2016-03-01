@@ -13,7 +13,11 @@ class Foo:
         # instances of the class will share the same namespace.
         self.__dict__ = self.__shared_state
         self.state = state
-        self.count += 1
+
+        # We need to reference the count in the class namespace, and not
+        # put count in __shared_state to avoid unnecessary update of its
+        # value for all instances.
+        self.__class__.count += 1
 
     def __str__(self):
         return self.state
@@ -56,6 +60,14 @@ class PartyGoer:
 def foo_example():
     samp1 = Foo()
     samp2 = Foo()
+
+    print(samp2.__dict__)
+    # print(Foo.__dict__)
+
+    samp3 = Foo()
+
+    print(samp1.__dict__)
+    print(samp2.__dict__)
 
     print 'samp1: {}, samp2: {}'.format(samp1, samp2)
 

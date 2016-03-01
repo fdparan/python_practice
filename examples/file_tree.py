@@ -9,8 +9,8 @@ from __future__ import print_function
 import os
 import sys
 
+# Python 3: raw_input => input
 if sys.version_info.major == 3:
-    from builtins import input
     raw_input = input
 
 
